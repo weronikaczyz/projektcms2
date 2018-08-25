@@ -63,12 +63,12 @@ class BookmarksController implements ControllerProviderInterface
 }
 
 
-/**$app->get(
-    '/bookmarks/{id}',
-    function ($id) use ($app, $bookmarksModel) {
-        return $app['twig']->render(
-            'bookmarks/view.html.twig',
-            ['bookmark' => $bookmarksModel->findOneById($id)]
-        );
-    }
-);
+//$app->get(
+//    '/bookmarks/{id}',
+//    function ($id) use ($app, $bookmarksModel) {
+//        return $app['twig']->render(
+//            'bookmarks/view.html.twig',
+//            ['bookmark' => $bookmarksModel->findOneById($id)]
+//        );
+//    }
+//);

@@ -12,7 +12,7 @@ $app->register(new AssetServiceProvider());
 $app->register(
     new TwigServiceProvider(),
     [
-        'twig.path' => dirname(dirname(__FILE__)).'/templates',
+        'twig.path' => dirname(__FILE__).'/templates',
     ]
 );
 

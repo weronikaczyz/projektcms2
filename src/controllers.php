@@ -6,7 +6,5 @@
  * @link http://epi.chojna.info.pl
  */
 use Controller\BookmarksController;
-use Controller\HelloController;
 
-$app->mount('/hello', new HelloController());
 $app->mount('/bookmarks', new BookmarksController());
