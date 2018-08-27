@@ -8,7 +8,9 @@
 use Controller\BookmarksController;
 use Controller\AuthController;
 use Controller\AccountController;
+use Controller\PagesController;
 
+$app->mount('/', new PagesController()); // root URL
 $app->mount('/bookmarks', new BookmarksController());
 $app->mount('/auth/', new AuthController());
 $app->mount('/account/', new AccountController());

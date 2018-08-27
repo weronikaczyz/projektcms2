@@ -1,0 +1,12 @@
+{% extends 'base.twig' %}
+{% block title %} Edit page {% endblock %}
+
+{% block content %}
+    <h1>
+        Edit page
+    </h1>
+    <form action="" method="post">
+        {{ form_widget(form) }}
+        <input type="submit" name="submit" />
+    </form>
+{% endblock %}

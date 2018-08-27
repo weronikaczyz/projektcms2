@@ -3,11 +3,17 @@
 {% block title %}Login{% endblock %}
 
 {% block body %}
-    <h3>
-        Login
-    </h3>
-    {{ error }}
-    <form action="{{ path('account_admin') }}" method="post">
-        {{ form_widget(form) }}
-    </form>
+    <div class="row">
+        <div class="col-md-12">
+            <h1>
+                Login
+            </h1>
+        </div>
+        <div class="col-md-12">
+            {{ error }}
+            <form action="{{ path('account_admin') }}" method="post">
+                {{ form_widget(form) }}
+            </form>
+        </div>
+    </div>
 {% endblock %}

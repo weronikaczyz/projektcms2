@@ -1,0 +1,15 @@
+{% extends 'base.twig' %}
+
+{% block title %}Delete page{% endblock %}
+
+{% endblock %}
+
+{% block content %}
+    <h3>
+        Delete page
+    </h3>
+    <p>Do you really want to delete this entry?</p>
+    <form action="" method="post">
+        {{ form_widget(form) }}
+    </form>
+{% endblock %}

@@ -27,7 +27,7 @@ $app->register(
     new DoctrineServiceProvider(), array(
         'db.options' => array(
             'driver'    => 'pdo_mysql',
-            'host'      => 'localhost',
+            'host'      => '127.0.0.1',
             'dbname'    => 'projekt',
             'user'      => 'root',
             'password'  => 'rootroot',
@@ -68,17 +68,17 @@ $app->register(
         ),
         'security.access_rules' => array(
             array(
-                '^/auth/.+$|^/pages/display|^/account/new.*$|^/comments/.*$|^/pages/.*$',
+                '^/$|^/auth/.+$|^/pages/display|^/account/new.*$|^/comments/.*$|^/pages/.*$',
                 'IS_AUTHENTICATED_ANONYMOUSLY'),
             array(
                 '^/pages/display|^/account/edit.*$|^/account/delete.*$',
-                'ROLE_USER'
+                'ROLE_EDITOR'
             ),
             array('^/.+$', 'ROLE_ADMIN')
         ),
         'security.role_hierarchy' => array(
-            'ROLE_ADMIN' => array('ROLE_USER', 'ROLE_ANONYMUS'),
-            'ROLE_USER' => array('ROLE_ANONYMUS'),
+            'ROLE_ADMIN' => array('ROLE_EDITOR', 'ROLE_ANONYMOUS'),
+            'ROLE_EDITOR' => array('ROLE_ANONYMOUS'),
         ),
     )
 );

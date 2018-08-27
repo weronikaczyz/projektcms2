@@ -1,0 +1,41 @@
+{% extends 'base.twig' %}
+
+{% block title %}Manage pages{% endblock %}
+
+{% block content %}
+
+
+    <div class="content viewMenu">
+        <h3>
+            Manage your pages
+        </h3>
+        <a href="{{ url('/pages/add') }}" title="Add entry">Add new page</a>
+        <div>
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Published</th>
+                    <th colspan="2">&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for entry in pages %}
+                    <tr>
+                        <td>{{ entry.idpages|e }}</td>
+                        <td>{{ entry.title|e }}</td>
+                        <td>{{ entry.published|e }}</td>
+                        <td>
+                            <a href="{{ url('/pages/edit', {'id': entry.idpages}) }}" title="Edit entry">Edit entry</a>
+                        </td>
+                        <td>
+                            <a href="{{ url('/pages/delete', {'id': entry.idpages}) }}" title="Delete entry">Delete entry</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
