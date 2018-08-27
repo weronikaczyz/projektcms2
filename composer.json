@@ -8,7 +8,12 @@
         "silex/silex": "^2.2",
         "twig/twig": "^2.5",
         "symfony/asset": "^4.1",
-        "symfony/twig-bridge": "^4.1"
+        "symfony/twig-bridge": "^4.1",
+        "doctrine/dbal": "^2.8",
+        "symfony/form": "^4.1",
+        "symfony/validator": "^4.1",
+        "symfony/config": "^4.1",
+        "symfony/security": "^4.1"
     },
     "autoload": {
         "psr-0": { "": "src/" }
