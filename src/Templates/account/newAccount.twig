@@ -1,0 +1,15 @@
+{% extends 'base.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+    <h1>
+        Register
+    </h1>
+    {% for message in app.session.getFlashBag.get('register.error') %}
+        <div class="error">{{ message }}</div>
+    {% endfor %}
+    <form action="{{ url('/account/new') }}" method="post">
+        {{ form_widget(form) }}
+    </form>
+{% endblock %}

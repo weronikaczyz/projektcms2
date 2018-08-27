@@ -1,0 +1,21 @@
+{% extends 'base.twig' %}
+
+{% block title %}{{ user.firstname|e }} {{ user.lastname|e }}{% endblock %}
+
+
+{% block content %}
+    <div class="content viewAccount">
+        <h3>
+            View your account
+        </h3>
+        <div>
+
+            <p>Firstname: {{ user.firstname|e }}</p>
+            <p>Lastname: {{ user.lastname|e }}</p>
+            <p>Login: {{ user.login|e }}</p>
+            <p>Email: {{ user.email|e }}</p>
+
+        </div>
+        <a href="{{ url('/account/edit', {'id': app.request.get('id')}) }}" title="Edit user">Edit your account information</a>
+    </div>
+{% endblock %}

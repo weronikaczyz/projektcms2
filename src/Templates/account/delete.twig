@@ -1,0 +1,12 @@
+{% extends 'base.twig' %}
+{% block title %} Delete your account {% endblock %}
+
+{% block content %}
+    <h3>
+        Delete account
+    </h3>
+    <p>Do you really want to delete your account?</p>
+    <form action="" method="post">
+        {{ form_widget(form) }}
+    </form>
+{% endblock %}
