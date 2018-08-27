@@ -50,31 +50,31 @@ $app->register(
                 'http' => true,
                 'form' => array(
                     'login_path' => '/auth/login',
-                    'check_path' => '/account/admin',
+                    'check_path' => '/admin/login_check',
                     'default_target_path'=> '/',
                     'username_parameter' => 'form[username]',
                     'password_parameter' => 'form[password]',
                 ),
 //                'logout'  => true,
-                'anonymous' => true,
                 'logout' => array('logout_path' => '/auth/logout'),
                 'users' => function () use ($app) {
-                    return new UserProvider($app['db']);
+                    return new UserProvider($app);
                 },
             ),
+            'unsecured' => array(
+                'anonymous' => true
+            ),
         ),
-        'unsecured' => array(
-            'anonymous' => true
-        ),
+
         'security.access_rules' => array(
             array(
                 '^/$|^/auth/.+$|^/pages/display|^/account/new.*$|^/comments/.*$|^/pages/.*$',
                 'IS_AUTHENTICATED_ANONYMOUSLY'),
             array(
-                '^/pages/display|^/account/edit.*$|^/account/delete.*$',
+                '^/$|^/pages/display|^/account/edit.*$|^/account/delete.*$',
                 'ROLE_EDITOR'
             ),
-            array('^/.+$', 'ROLE_ADMIN')
+//            array('^/.+$', 'ROLE_ADMIN')
         ),
         'security.role_hierarchy' => array(
             'ROLE_ADMIN' => array('ROLE_EDITOR', 'ROLE_ANONYMOUS'),

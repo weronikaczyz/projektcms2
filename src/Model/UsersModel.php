@@ -107,21 +107,21 @@ class UsersModel
     {
         $sql = '
             SELECT
-                roles.role
+                roles.name
             FROM
-                users_roles
-            INNER JOIN
                 roles
-            ON users_roles.role_id=roles.id
+            INNER JOIN
+                users
+            ON users.idroles=roles.idroles
             WHERE
-                users_roles.user_id = ?
+                users.idusers = ?
             ';
 
         $result = $this->_db->fetchAll($sql, array((string) $this->_app->escape($userId)));
 
         $roles = array();
         foreach ($result as $row) {
-            $roles[] = $row['role'];
+            $roles[] = $row['name'];
         }
 
         return $roles;

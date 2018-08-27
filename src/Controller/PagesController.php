@@ -13,6 +13,11 @@ use Silex\Api\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 use Model\PagesModel;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * This class contains definitions of menu elements administration methods.
@@ -34,6 +39,7 @@ class PagesController implements ControllerProviderInterface
         $this->_model = new PagesModel($app);
 
         $pagesController->match('/', array($this, 'index'))->bind('/');
+        $pagesController->match('/pages/edit', array($this, 'edit'))->bind('/pages/edit');
 
         return $pagesController;
     }
@@ -48,6 +54,7 @@ class PagesController implements ControllerProviderInterface
     {
         if ($app['security']->isGranted('ROLE_ADMIN')) {
             $pages = $this->_model->getPagesEntries();
+
             return $app['twig']->render('pages/admin.twig', array('pages' => $pages));
         }
     }
@@ -60,7 +67,7 @@ class PagesController implements ControllerProviderInterface
      */
     public function index(Application $app, Request $request)
     {
-        $id = (int) $request->get('id', 0);
+        $id = (int) $request->get('id', 1);
 
         $page = $this->_model->getPage($id);
 
@@ -86,24 +93,24 @@ class PagesController implements ControllerProviderInterface
      */
     public function edit(Application $app, Request $request)
     {
-        $id = (int) $request->get('id', 0);
+        $id = (int) $request->get('id', 1);
 
 
 
         $data = array();
-        if ($app['security']->isGranted('ROLE_ADMIN')) {
+//        if ($app['security.authorization_checker']->isGranted('ROLE_ADMIN')) {
             // default values:
             $entry = $this->_model->getPage($id);
-            $form = $app['form.factory']->createBuilder('form', $entry)
+            $form = $app['form.factory']->createBuilder(FormType::class, $entry)
                 ->add(
-                    'idpages', 'hidden', array(
+                    'idpages', HiddenType::class, array(
                         'constraints' => array(
                             new Assert\NotBlank()
                         )
                     )
                 )
                 ->add(
-                    'title', 'text', array(
+                    'title', TextType::class, array(
                         'constraints' => array(
                             new Assert\NotBlank(), new Assert\Length(
                                 array(
@@ -114,7 +121,7 @@ class PagesController implements ControllerProviderInterface
                     )
                 )
                 ->add(
-                    'content', 'text', array(
+                    'content', TextType::class, array(
                         'constraints' => array(
                             new Assert\NotBlank(), new Assert\Length(
                                 array(
@@ -125,14 +132,14 @@ class PagesController implements ControllerProviderInterface
                     )
                 )
                 ->add(
-                    'published', 'choice', array(
+                    'published', ChoiceType::class, array(
                         'choices' => array(
-                            'YES' => 'YES', 'NO' => 'NO'
+                            'YES' => 1, 'NO' => 0
                         ),
                         'expanded' => true,
                     )
                 )
-                ->add('Submit', 'submit')
+                ->add('Submit', SubmitType::class)
                 //->add('password', 'password', array(
                 //  'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 3)))
                 //))
@@ -141,23 +148,24 @@ class PagesController implements ControllerProviderInterface
 
             $form->handleRequest($request);
 
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 $data = $form->getData();
 
                 $model = $this->_model->saveEntry($data);
                 if (!$model) {
                     $app['session']->getFlashBag()->set('success', 'Information was updated sucessfully');
-                    return $app->redirect($app['url_generator']->generate('/pages/admin'), 301);
+                    return $app->redirect($app['url_generator']->generate('/'), 301);
                 } else {
                     $app['session']->getFlashBag()->set('error', 'Ooops! An error occured!');
                 }
             }
 
 
-        } else {
-            return $app->redirect($app['url_generator']->generate('/auth/login'), 301);
-        }
-        return $app['twig']->render('global/edit.twig', array('form' => $form->createView(), 'item' => 'page'));
+//        } else {
+//            return $app->redirect($app['url_generator']->generate('/auth/login'), 301);
+//        }
+
+        return $app['twig']->render('pages/edit.twig', array('form' => $form->createView(), 'item' => 'page'));
     }
 
     /**
