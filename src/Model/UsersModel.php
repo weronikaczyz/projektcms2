@@ -14,27 +14,27 @@ class UsersModel
      * @var _app contains application.
      */
     protected $_app;
-    
+
     /**
      * @var _db contains database.
      */
     protected $_db;
-    
+
     /**
      * Constructor.
-     * 
-     * @param application 
+     *
+     * @param application
      */
     public function __construct(Application $app)
     {
         $this->_app = $app;
         $this->_db = $app['db'];
     }
-    
-    
+
+
     /**
      * Loading user details to session using given login.
-     * 
+     *
      * @param $login
      * @return $user
      */
@@ -63,7 +63,7 @@ class UsersModel
 
     /**
      * Connecting to database and getting user details using given login.
-     * 
+     *
      * @param $login
      * @return array
      */
@@ -72,10 +72,10 @@ class UsersModel
         $sql = 'SELECT * FROM users WHERE login = ?';
         return $this->_db->fetchAssoc($sql, array((string) $this->_app->escape($login)));
     }
-    
+
     /**
      * Connecting to database and getting user details using given id.
-     * 
+     *
      * @param $id
      * @return array
      */
@@ -84,10 +84,10 @@ class UsersModel
         $sql = 'SELECT * FROM users WHERE `idusers` = ? Limit 1';
         return $this->_db->fetchAssoc($sql, array((int)$this->_app->escape($id)));
     }
-    
+
     /**
      * Connecting to database and getting user details using given id.
-     * 
+     *
      * @param $id
      * @return array
      */
@@ -96,10 +96,10 @@ class UsersModel
         $sql = 'SELECT * FROM users';
         return $this->_db->fetchAll($sql);
     }
-    
+
     /**
      * Loading user details to session using given id.
-     * 
+     *
      * @param $id
      * @return $roles
      */
@@ -126,10 +126,10 @@ class UsersModel
 
         return $roles;
     }
-    
+
     /**
      * This method allows people to create new accounts.
-     * 
+     *
      * @param $data
      * @return bool
      */
@@ -137,32 +137,32 @@ class UsersModel
     {
         $check = NULL;
         $check = $this->getUserByLogin($data['login']);
-            
+
         if (!$check) {
             $sql = 'INSERT INTO users (firstname, lastname, login, password, email) VALUES (?,?,?,?,?); ';
             $this->_db->executeQuery(
                 $sql, array(
-                    $this->_app->escape($data['firstname']), 
-                    $this->_app->escape($data['lastname']), 
-                    $this->_app->escape($data['login']), 
-                    $this->_app->escape($encodedPassword),  
+                    $this->_app->escape($data['firstname']),
+                    $this->_app->escape($data['lastname']),
+                    $this->_app->escape($data['login']),
+                    $this->_app->escape($encodedPassword),
                     $this->_app->escape($data['email'])
                 )
             );
-                
+
             $sql2 = "SELECT * FROM users WHERE login =\"".$this->_app->escape($data['login'])."\";";
             $user = $this->_db->fetchAssoc($sql2);
             $sql3 = 'INSERT INTO users_roles (`user_id`, `role_id` ) VALUES(?, ?)';
             $this->_db->executeQuery($sql3, array($user['idusers'], 2));
             return 0;
         } else {
-            return 1;   
-        }   
+            return 1;
+        }
     }
-    
+
     /**
      * This method allows people to edit their accounts.
-     * 
+     *
      * @param $data
      * @return bool
      */
@@ -173,8 +173,8 @@ class UsersModel
             $success = $this->_db->executeQuery(
                 $sql, array(
                     $this->_app->escape($data['firstname']),
-                    $this->_app->escape($data['lastname']), 
-                    $this->_app->escape($data['email']), 
+                    $this->_app->escape($data['lastname']),
+                    $this->_app->escape($data['email']),
                     $this->_app->escape($data['idusers'])
                 )
             );
@@ -182,15 +182,15 @@ class UsersModel
                 return 0;
             } else {
                 return 1;
-            }   
+            }
         } else {
             return 1;
         }
     }
-    
+
     /**
      * This method allows people to edit their accounts.
-     * 
+     *
      * @param $data
      * @return bool
      */
@@ -198,12 +198,12 @@ class UsersModel
     {
         if (isset($id) && ctype_digit((string)$id)) {
             $sql = 'DELETE FROM users_roles WHERE user_id = ?';
-            $success = $this->_db->executeQuery($sql, array($this->_app->escape($id)));     
-            
+            $success = $this->_db->executeQuery($sql, array($this->_app->escape($id)));
+
             if ($success) {
                 $sql2 = 'DELETE FROM users WHERE idusers = ?';
                 $success2 = $this->_db->executeQuery($sql2, array($this->_app->escape($id)));
-                    
+
                 if ($success2) {
                     return 0;
                 } else {
@@ -211,13 +211,13 @@ class UsersModel
                 }
             } else {
                 return 1;
-            }           
+            }
         }
     }
-    
+
     /**
      * This method allows people to change their passwords.
-     * 
+     *
      * @param $data
      * @return bool
      */
@@ -229,7 +229,7 @@ class UsersModel
             $sql, array(
                 $this->_app->escape(
                     $data['new_password']
-                ), 
+                ),
                 $this->_app->escape($id)
             )
         );
