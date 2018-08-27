@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 /**
  * This class contains definitions of menu administration database requests.
  */
-class GlobalModel
+class SettingsModel
 {
     /**
      * @var _app contains application.
