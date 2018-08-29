@@ -1,0 +1,18 @@
+{% extends 'base.twig' %}
+
+{% block title %}Manage your {{ item }}{% endblock %}
+
+{% block content %}
+    <h3>
+        Manage {{ item }}
+    </h3>
+    {% if is_granted('ROLE_ADMIN') %}
+        <form action="" method="post">
+            {{ form_widget(form) }}
+        </form>
+
+    {% else %}
+        <div class="error">You have no permissions to view this site!</div>
+    {% endif %}
+
+{% endblock %}

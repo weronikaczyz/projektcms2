@@ -1,0 +1,17 @@
+{% extends 'base.twig' %}
+
+{% block title %}Upload a file{% endblock %}
+
+{% block content %}
+    <h3>
+        Upload file
+    </h3>
+    {% if is_granted('ROLE_ADMIN') %}
+        <form action="{{ url('/photos/upload' , {'option': option }) }}" {{ form_enctype(form) }} method="post">
+            {{ form_widget(form) }}
+        </form>
+    {% else %}
+        <div class="error">You have no permissions to view this site!</div>
+    {% endif %}
+
+{% endblock %}

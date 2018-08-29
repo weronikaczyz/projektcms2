@@ -1,0 +1,25 @@
+{% extends 'base.twig' %}
+
+{% block title %}Manage your site{% endblock %}
+
+
+{% block content %}
+
+    <h3>
+        Manage your site
+    </h3>
+    {% if is_granted('ROLE_ADMIN') %}
+        <ul>
+            <li><a href="{{ url(menu.logo) }}" title="Edit logo">Edit logo</a></li>
+            <li><a href="{{ url(menu.background) }}" title="Edit background">Edit background</a></li>
+            <li><a href="{{ url(menu.layout) }}" title="Edit layout">Edit layout</a></li>
+            <li><a href="{{ url(menu.theme) }}" title="Edit theme">Edit theme</a></li>
+            <li><a href="{{ url(menu.title) }}" title="Edit pages">Edit title</a></li>
+            <li><a href="{{ url(menu.footer) }}" title="Edit pages">Edit footer</a></li>
+            <li><a href="{{ url('/menu/admin') }}" title="Edit menu">Edit menu</a></li>
+            <li><a href="{{ url('/pages/admin') }}" title="Edit pages">Edit pages</a></li>
+        </ul>
+    {% else %}
+        <div class="error">You have no permissions to view this site!</div>
+    {% endif %}
+{% endblock %}

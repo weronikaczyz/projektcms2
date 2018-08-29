@@ -1,0 +1,18 @@
+{% extends 'base.twig' %}
+
+{% block title %}Delete {{ item }}{% endblock %}
+
+{% block content %}
+    <h3>
+        Delete logo
+    </h3>
+    {% if is_granted('ROLE_ADMIN') %}
+        <p>Do you really want to delete {{ item }}?</p>
+        <form action="" method="post">
+            {{ form_widget(form) }}
+        </form>
+    {% else %}
+        <div class="error">You have no permissions to view this site!</div>
+    {% endif %}
+
+{% endblock %}
