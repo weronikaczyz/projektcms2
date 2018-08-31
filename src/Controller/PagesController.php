@@ -39,7 +39,9 @@ class PagesController implements ControllerProviderInterface
         $this->_model = new PagesModel($app);
 
         $pagesController->match('/', array($this, 'index'))->bind('/');
-        $pagesController->match('/pages/edit', array($this, 'edit'))->bind('/pages/edit');
+        $pagesController->match('pages/edit', array($this, 'edit'))->bind('/pages/edit');
+        $pagesController->match('pages/new', array($this, 'newPage'))->bind('/pages/new');
+        $pagesController->match('pages/delete', array($this, 'delete'))->bind('/pages/delete');
 
         return $pagesController;
     }
@@ -277,9 +279,9 @@ class PagesController implements ControllerProviderInterface
             }
 
         if ($app['setup'] == true) {
-            return $app['twig']->render('setup/new.twig', array(FormType::class => $form->createView()));
+            return $app['twig']->render('setup/new.twig', array('form' => $form->createView()));
         } else {
-            return $app['twig']->render('pages/new.twig', array(FormType::class => $form->createView()));
+            return $app['twig']->render('pages/new.twig', array('form' => $form->createView()));
         }
     }
 
@@ -324,7 +326,7 @@ class PagesController implements ControllerProviderInterface
                     return $app->redirect($app['url_generator']->generate('/pages/admin'), 301);
                 } // redirecting to main menu admin site
             }
-        } else { // if user is not admin
+         else { // if user is not admin
             return $app->redirect($app['url_generator']->generate('/auth/login'), 301);
         }
         return $app['twig']->render('global/delete.twig', array('form' => $form->createView(), 'item' => 'page'));
