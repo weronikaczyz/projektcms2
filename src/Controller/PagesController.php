@@ -179,7 +179,7 @@ class PagesController implements ControllerProviderInterface
         $data = array();
 
         //if ($app['security']->isGranted('ROLE_ADMIN')) {
-            $form = $app['form.factory']->createBuilder('form', $data)
+            $form = $app['form.factory']->createBuilder(FormType::class, $data)
                 ->add(
                     'title', TextType::class, array(
                         'constraints' => array(
@@ -218,7 +218,7 @@ class PagesController implements ControllerProviderInterface
                         'expanded' => true,
                     )
                 )
-                ->add('Submit', 'submit')
+                ->add('Submit', SubmitType::class)
                 ->getForm();
 
             $form->handleRequest($request);
@@ -293,13 +293,13 @@ class PagesController implements ControllerProviderInterface
     {
         $id = (int) $request->get('id', 0);
 
-        if ($app['security']->isGranted('ROLE_ADMIN')) {
-            $form = $app['form.factory']->createBuilder('form')
+        //if ($app['security']->isGranted('ROLE_ADMIN')) {
+            $form = $app['form.factory']->createBuilder(FormType::class)
                 ->add(
-                    'Yes', 'submit'
+                    'Yes', SubmitType::class
                 )
                 ->add(
-                    'No', 'submit'
+                    'No', SubmitType::class
                 )
                 ->getForm();
 
