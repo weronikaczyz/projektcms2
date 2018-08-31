@@ -178,10 +178,10 @@ class PagesController implements ControllerProviderInterface
     {
         $data = array();
 
-        if ($app['security']->isGranted('ROLE_ADMIN')) {
+        //if ($app['security']->isGranted('ROLE_ADMIN')) {
             $form = $app['form.factory']->createBuilder('form', $data)
                 ->add(
-                    'title', 'text', array(
+                    'title', TextType::class, array(
                         'constraints' => array(
                             new Assert\NotBlank(), new Assert\Length(
                                 array(
@@ -192,7 +192,7 @@ class PagesController implements ControllerProviderInterface
                     )
                 )
                 ->add(
-                    'content', 'text', array(
+                    'content', TextType::class, array(
                         'constraints' => array(
                             new Assert\NotBlank(), new Assert\Length(
                                 array(
@@ -203,17 +203,17 @@ class PagesController implements ControllerProviderInterface
                     )
                 )
                 ->add(
-                    'published', 'choice', array(
+                    'published', ChoiceType::class, array(
                         'choices' => array(
-                            'YES' => 'YES', 'NO' => 'NO'
+                            'YES' => '1', 'NO' => '0'
                         ),
                         'expanded' => true,
                     )
                 )
                 ->add(
-                    'link', 'choice', array(
+                    'link', ChoiceType::class, array(
                         'choices' => array(
-                            'YES' => 'YES', 'NO' => 'NO'
+                            'YES' => '1', 'NO' => '0'
                         ),
                         'expanded' => true,
                     )
@@ -275,11 +275,11 @@ class PagesController implements ControllerProviderInterface
                     );
                 }
             }
-        }
+
         if ($app['setup'] == true) {
-            return $app['twig']->render('setup/new.twig', array('form' => $form->createView()));
+            return $app['twig']->render('setup/new.twig', array(FormType::class => $form->createView()));
         } else {
-            return $app['twig']->render('pages/new.twig', array('form' => $form->createView()));
+            return $app['twig']->render('pages/new.twig', array(FormType::class => $form->createView()));
         }
     }
 
