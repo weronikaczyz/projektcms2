@@ -39,6 +39,7 @@ class PagesController implements ControllerProviderInterface
         $this->_model = new PagesModel($app);
 
         $pagesController->match('/', array($this, 'index'))->bind('/');
+        $pagesController->match('pages/admin', array($this, 'admin'))->bind('/pages/admin');
         $pagesController->match('pages/edit', array($this, 'edit'))->bind('/pages/edit');
         $pagesController->match('pages/new', array($this, 'newPage'))->bind('/pages/new');
         $pagesController->match('pages/delete', array($this, 'delete'))->bind('/pages/delete');
@@ -54,11 +55,11 @@ class PagesController implements ControllerProviderInterface
      */
     public function admin(Application $app, Request $request)
     {
-        if ($app['security']->isGranted('ROLE_ADMIN')) {
+        //if ($app['security']->isGranted('ROLE_ADMIN')) {
             $pages = $this->_model->getPagesEntries();
 
             return $app['twig']->render('pages/admin.twig', array('pages' => $pages));
-        }
+
     }
 
     /**

@@ -97,14 +97,15 @@ class PagesModel
      */
     public function newPage($data)
     {
-        $sql = 'INSERT INTO pages (`title`, `content`, `published`) VALUES (?, ?, ?)';
-        //$sql2 = 'SELECT @@identity';
+        $sql = 'INSERT INTO pages (`title`, `content`, `published`,`idusers` ) VALUES (?, ?, ?,?) ';
+        //$sql2 = 'SELECT @@IDENTITY';
 
         $success = $this->_db->executeUpdate(
             $sql, array(
                 $this->_app->escape($data['title']),
                 $this->_app->escape($data['content']),
-                $this->_app->escape($data['published'])
+                $this->_app->escape($data['published']),
+                1
             )
         );
 
