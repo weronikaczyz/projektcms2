@@ -3,11 +3,11 @@
 
 {% block title %}Add new page{% endblock %}
 
-{% block content %}
+{% block body %}
     <h1>
         Add new page
     </h1>
-    <form action="{{ url('/pages/add') }}" method="post">
+    <form action="{{ url('/pages/new') }}" method="post">
         {{ form_widget(form) }}
     </form>
-{% endblock %}}
+{% endblock %}

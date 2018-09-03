@@ -13,11 +13,6 @@ body{
 div{
     display:block;
 }
-#container{
-    width:1170px;
-    min-height:750px;
-    margin:0 auto;
-}
 
 #header{
     position:relative;
