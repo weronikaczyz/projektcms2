@@ -2,16 +2,16 @@
 
 {% block title %}Upload a file{% endblock %}
 
-{% block content %}
+{% block body %}
     <h3>
         Upload file
     </h3>
-    {% if is_granted('ROLE_ADMIN') %}
-        <form action="{{ url('/photos/upload' , {'option': option }) }}" {{ form_enctype(form) }} method="post">
+
+        <form action="{{ path('/photos/upload', {'id': id}) }}" method="post" enctype="multipart/form-data">
             {{ form_widget(form) }}
         </form>
-    {% else %}
+
         <div class="error">You have no permissions to view this site!</div>
-    {% endif %}
+
 
 {% endblock %}

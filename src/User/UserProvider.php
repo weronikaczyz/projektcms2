@@ -57,6 +57,8 @@ class UserProvider implements UserProviderInterface
     {
         $userModel = new UsersModel($this->_app);
         $user = $userModel->loadUserByLogin($login);
+//        var_dump($user);
+//        exit();
         return new User($user['login'], $user['password'], $user['roles'], true, true, true, true);
     }
 

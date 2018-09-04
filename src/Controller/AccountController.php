@@ -13,6 +13,11 @@ use Silex\Api\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 use Model\UsersModel;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * This class contains definitions of account control methods.
@@ -108,47 +113,47 @@ class AccountController implements ControllerProviderInterface
     {
         $data = array();
 
-        $form = $app['form.factory']->createBuilder('form', $data)
+        $form = $app['form.factory']->createBuilder(FormType::class, $data)
             ->add(
-                'firstname', 'text', array(
+                'firstname', TextType::class, array(
                 'constraints' => array(
                     new Assert\NotBlank(), new Assert\Length(array('min' => 3)))
             )
             )
             ->add(
-                'lastname', 'text', array(
+                'lastname', TextType::class, array(
                 'constraints' => array(
                     new Assert\NotBlank(), new Assert\Length(array('min' => 3)))
             )
             )
             ->add(
-                'login', 'text', array(
+                'login', TextType::class, array(
                 'constraints' => array(
                     new Assert\NotBlank(), new Assert\Length(array('min' => 3)))
             )
             )
             ->add(
-                'password', 'password', array(
+                'password', PasswordType::class, array(
                 'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 6)))
             )
             )
             ->add(
-                'confirm_password', 'password', array( // confirm password
+                'confirm_password', PasswordType::class, array( // confirm password
                 'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 6)))
             )
             )
             ->add(
-                'email', 'email', array(
+                'email', EmailType::class, array(
                 'constraints' => array(new Assert\NotBlank(), new Assert\Email())
             )
             )
                     
-            ->add('Enter', 'submit')
+            ->add('Enter', SubmitType::class)
             ->getForm();
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             
             $password = $form['password'] -> getData();
             $passwordConfirm = $form['confirm_password'] -> getData();

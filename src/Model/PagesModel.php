@@ -51,6 +51,12 @@ class PagesModel
         return $this->_db->fetchAll($sql);
     }
 
+    public function getMenuPages()
+    {
+        $sql='SELECT idpages, title FROM pages WHERE published = 1';
+        return $this->_db->fetchAll($sql);
+    }
+
     /**
      * Downloads every menu entry in database.
      *
@@ -137,6 +143,28 @@ class PagesModel
                 return 0;
             } else {
                 return 1;
+            }
+        }
+    }
+
+
+    /**
+     * Upadte photo information inside page.
+     *
+     * @param $idPhotos
+     * @param $idPages
+     * @return bool
+     */
+    public function updatePhoto($idPhotos, $idPages)
+    {
+        if (isset($idPhotos) && ctype_digit((string)$idPhotos) && isset($idPages) && ctype_digit((string)$idPages)) {
+            $sql = 'UPDATE pages SET idphotos = ? WHERE idpages = ?';
+            $success = $this->_db->executeQuery($sql, array($this->_app->escape($idPhotos), $this->_app->escape($idPages)));
+            //var_dump($id);
+            if ($success) {
+                return true;
+            } else {
+                return false;
             }
         }
     }

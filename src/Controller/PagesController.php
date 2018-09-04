@@ -16,6 +16,7 @@ use Model\PagesModel;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
@@ -55,11 +56,12 @@ class PagesController implements ControllerProviderInterface
      */
     public function admin(Application $app, Request $request)
     {
-        //if ($app['security']->isGranted('ROLE_ADMIN')) {
+//        if ($app['security.authorization_checker']->isGranted('ROLE_EDITOR')) {
             $pages = $this->_model->getPagesEntries();
-
             return $app['twig']->render('pages/admin.twig', array('pages' => $pages));
-
+//        } else {
+//              return $app->redirect($app['url_generator']->generate('/auth/login'), 301);
+//        }
     }
 
     /**
@@ -70,7 +72,7 @@ class PagesController implements ControllerProviderInterface
      */
     public function index(Application $app, Request $request)
     {
-        $id = (int)$request->get('id', 1);
+        $id = (int)$request->get('id', $app['homepage']);
 
         $page = $this->_model->getPage($id);
 
@@ -123,7 +125,7 @@ class PagesController implements ControllerProviderInterface
                 )
             )
             ->add(
-                'content', TextType::class, array(
+                'content', TextareaType::class, array(
                     'constraints' => array(
                         new Assert\NotBlank(), new Assert\Length(
                             array(
@@ -142,9 +144,6 @@ class PagesController implements ControllerProviderInterface
                 )
             )
             ->add('Submit', SubmitType::class)
-            //->add('password', 'password', array(
-            //  'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 3)))
-            //))
             ->getForm();
 
 
@@ -194,7 +193,7 @@ class PagesController implements ControllerProviderInterface
                 )
             )
             ->add(
-                'content', TextType::class, array(
+                'content', TextareaType::class, array(
                     'constraints' => array(
                         new Assert\NotBlank(), new Assert\Length(
                             array(
@@ -212,14 +211,6 @@ class PagesController implements ControllerProviderInterface
                     'expanded' => true,
                 )
             )
-            ->add(
-                'link', ChoiceType::class, array(
-                    'choices' => array(
-                        'YES' => '1', 'NO' => '0'
-                    ),
-                    'expanded' => true,
-                )
-            )
             ->add('Submit', SubmitType::class)
             ->getForm();
 
@@ -228,53 +219,13 @@ class PagesController implements ControllerProviderInterface
         if ($form->isSubmitted() && $form->isValid()) {
             $entry = $this->_model->newPage($form->getData());
             if ($entry != NULL) {  // entry should contain id of newly created page or NULL
-                $link = $form['link']->getData(); // converting data from form to string
-                if (strcmp($link, 'YES') == 0) { // if user wants to create a link automatically, lets do it!
-                    $menu = new MenuModel($app);// creating new instance of menu model
-                    $title = $form['title']->getData(); // converting data from form to strig
-                    $active = $form['published']->getData(); // as above
-                    $data = array( // assigning default values to an array
-                        'url' => '/pages/display/' . $entry,
-                        'description' => $title,
-                        'position' => 'LEFT',
-                        'active' => $active,
-                        'external' => 'NO'
-                    );
-                    $success = $menu->newEntry($data); // database insertion
-                    if (!$success) { // if successful
-                        // if ($app['setup']==true) {   // setup mode is on
-                        $app['session']->getFlashBag()->set(
-                            'success', 'Congratulations! Your new page is ready to use!'
-                        );
-
-                        $global = new SettingsController($app);
-                        $stop = $global->stopSetup($app);
-
-                        return $app->redirect($app['url_generator']->generate('/'), 301);
-                    } else { // setup is off
-                        $app['session']->getFlashBag()->set(
-                            'success', 'New entry was created along with the link!'
-                        );
-                        //return $app->redirect($app['url_generator']->generate('/pages/admin'), 301);
-                    }
-                } else { // if not succesfull
-                    $app['session']->getFlashBag()->set('error', 'Ooops! An error occured! Link was not created!');
-                }
+                $app['session']->getFlashBag()->set('success', 'New entry was created!');
+                return $app->redirect($app['url_generator']->generate('/pages/admin'), 301);
             } else { // user does not want a link
-                if ($app['setup'] == true) {   // setup mode is on
-                    $app['session']->getFlashBag()->set(
-                        'success', 'Congratulations! Your new page is ready to use!'
-                    );
-                    return $app->redirect($app['url_generator']->generate('/'), 301);
-                } else { // setup is off
-                    $app['session']->getFlashBag()->set('success', 'New entry was created!');
-                    // return $app->redirect($app['url_generator']->generate('/pages/admin'), 301);
-                }
+                $app['session']->getFlashBag()->set(
+                    'error', 'Ooops! An error occured! Neither entry or link were created!'
+                );
             }
-        } else { // entry is NULL, which means that new page was not created
-            $app['session']->getFlashBag()->set(
-                'error', 'Ooops! An error occured! Neither entry or link were created!'
-            );
         }
 
         return $app['twig']->render('pages/new.twig', array('form' => $form->createView()));

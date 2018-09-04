@@ -149,11 +149,6 @@ class UsersModel
                     $this->_app->escape($data['email'])
                 )
             );
-
-            $sql2 = "SELECT * FROM users WHERE login =\"".$this->_app->escape($data['login'])."\";";
-            $user = $this->_db->fetchAssoc($sql2);
-            $sql3 = 'INSERT INTO users_roles (`user_id`, `role_id` ) VALUES(?, ?)';
-            $this->_db->executeQuery($sql3, array($user['idusers'], 2));
             return 0;
         } else {
             return 1;

@@ -1,41 +1,41 @@
 body{
-    width: 600px;
-    background-color:#6c757d;
+    /*width: 600px;*/
+    /*background-color:#6c757d;*/
     font-family: 'Raleway', sans-serif;
-    margin: 20px;
-    padding: 10px 10px 10px 10px;
+    /*margin: 20px;*/
+    /*padding: 10px 10px 10px 10px;*/
 }
-h1 {
-    margin: 0;
-    padding: 20px 0;
-    color: #BC8F8F;
-}
+/*h1 {*/
+    /*margin: 0;*/
+    /*padding: 20px 0;*/
+    /*color: #BC8F8F;*/
+/*}*/
 
-div{
-    display:block;
-}
-form{
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-}
-input{
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    background-color: LightGray;
-    color: Gray;
+/*div{*/
+    /*display:block;*/
+/*}*/
+/*form{*/
+    /*width: 100%;*/
+    /*padding: 12px 20px;*/
+    /*margin: 8px 0;*/
+    /*box-sizing: border-box;*/
+/*}*/
+/*input{*/
+    /*width: 100%;*/
+    /*padding: 12px 20px;*/
+    /*margin: 8px 0;*/
+    /*box-sizing: border-box;*/
+    /*background-color: LightGray;*/
+    /*color: Gray;*/
 
-}
-a{
+/*}*/
+/*a{*/
 
-    background-color: darkgray;
-    border: 1px;
-    color: white;
-    padding: 4px 4px;
-    text-decoration: none;
-    margin: 4px 2px;
-    cursor: pointer;
-}
+    /*background-color: darkgray;*/
+    /*border: 1px;*/
+    /*color: white;*/
+    /*padding: 4px 4px;*/
+    /*text-decoration: none;*/
+    /*margin: 4px 2px;*/
+    /*cursor: pointer;*/
+/*}*/
