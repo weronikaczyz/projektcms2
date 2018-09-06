@@ -4,9 +4,7 @@
 {% block title %}Add new page{% endblock %}
 
 {% block body %}
-    <h1>
-        Add new page
-    </h1>
+    <h1 class="display-3"> Add new page</h1>
     <form action="{{ url('/pages/new') }}" method="post">
         {{ form_widget(form) }}
     </form>

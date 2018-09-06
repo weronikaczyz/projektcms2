@@ -3,11 +3,9 @@
 {% block title %}Upload a file{% endblock %}
 
 {% block body %}
-    <h3>
-        Upload file
-    </h3>
+    <h1 class="display-3"> Upload file</h1>
 
-        <form action="{{ path('/photos/upload', {'id': id}) }}" method="post" enctype="multipart/form-data">
+        <form action="{{ path('/photos/upload', {'id': id}) }}" method="post" enctype="multipart/form-data" class="form-control" >
             {{ form_widget(form) }}
         </form>
 

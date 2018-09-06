@@ -3,13 +3,14 @@
 {% block title %} Delete page {% endblock %}
 
 {% block body %}
-    <h1>
-        Delete page
-    </h1>
+    <h1 class="display-3"> Delete page</h1>
 
-    <p>Do you really want to delete this entry?</p>
-    <form action="" method="post">
+    <h3>Do you really want to delete this entry?</h3>
+
+    <form  action="" method="post">
         {{ form_widget(form) }}
+        <button type="button" class="btn btn-outline-success">Yes</button>
+        <button type="button" class="btn btn-outline-danger">No</button>
     </form>
 
 {% endblock %}
