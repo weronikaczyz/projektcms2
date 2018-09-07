@@ -54,7 +54,13 @@ $app['security.default_encoder'] = function ($app) {
     return new PlaintextPasswordEncoder();
 };
 
-$app['homepage'] = 1; // TODO: pobrac z bazy danych ID homepage $settingsModel->getSetting('background');
+$app['homepage'] = 1;
+
+
+
+//$settingsModel->getSetting('background');
+
+// TODO: pobrac z bazy danych ID homepage $settingsModel->getSetting('background');
 
 //$app->register(
 //    new SecurityServiceProvider(), array(

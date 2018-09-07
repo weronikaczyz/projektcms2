@@ -1,9 +1,14 @@
 {% extends 'base.twig' %}
 
-{% block title %}{{ page.title|e }}{% endblock %}
+{% block title %}{{ page.title|e }}
+
+{% endblock %}
 
 {% block body %}
     <div class="content viewPage">
         {{ page.content|e }}
+        <img src="{{ asset('media/1.jpg') }}" />
     </div>
+
 {% endblock %}
+

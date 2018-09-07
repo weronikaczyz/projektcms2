@@ -19,5 +19,5 @@ $app->mount('/auth/', new AuthController());
 $app->mount('/account/', new AccountController());
 //$app->mount('/admin/', new AdminController());
 $app->mount('/photos/', new PhotosController());
-//$app->mount('/settings/', new SettingsController()); // TODO: odkomentowac i naprawic bledy
+$app->mount('/settings/', new SettingsController()); // TODO: odkomentowac i naprawic bledy
 //$app->mount('/login_check/', array());

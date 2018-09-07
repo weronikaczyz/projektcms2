@@ -89,7 +89,6 @@ class PagesController implements ControllerProviderInterface
         }
     }
 
-
     /**
      * This method allows administrator to edit page.
      *
@@ -104,6 +103,8 @@ class PagesController implements ControllerProviderInterface
         $data = array();
         //if ($app['security.authorization_checker']->isGranted('ROLE_ADMIN')) {
         // default values:
+
+
         $entry = $this->_model->getPage($id);
         $form = $app['form.factory']->createBuilder(FormType::class, $entry)
             ->add(
@@ -146,6 +147,13 @@ class PagesController implements ControllerProviderInterface
             ->add('Submit', SubmitType::class)
             ->getForm();
 
+        //$builder =$app['form.factory']->FormBuilderInterface
+        //->add('subject', TextType::class, array(
+        //        'label' => 'Subject',
+        //        'attr' => array(
+        //            'class' => 'form-group')
+        //    )
+        //);
 
         $form->handleRequest($request);
 
@@ -250,7 +258,7 @@ class PagesController implements ControllerProviderInterface
             ->add(
                 'Yes', SubmitType::class
             )
-            ->add(
+            ->add (
                 'No', SubmitType::class
             )
             ->getForm();
