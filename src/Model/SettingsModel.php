@@ -42,15 +42,15 @@ class SettingsModel
 
 
     /**
-     * Replaces current logo with the new one.
-     *
-     * @return bool
+     * @param $id
+     * @return int
      */
-    public function updateSettings($id, $option)
+
+    public function updateSettings($id)
     {
         if (isset($id) && ctype_digit((string)$id)) {
-            $sql = 'UPDATE settings SET att_value = ? WHERE att_name = ?';
-            $success = $this->_db->executeQuery($sql, array($this->_app->escape($id), $this->_app->escape($option)));
+            $sql = 'UPDATE settings SET att_value = ? WHERE (att_name = "homepage") VALUES (?)';
+            $success = $this->_db->executeQuery($sql, array($this->_app->escape($id)));
             //var_dump($id);
             if ($success) {
                 return 0;

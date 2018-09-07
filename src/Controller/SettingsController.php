@@ -66,10 +66,12 @@ class SettingsController implements ControllerProviderInterface
     public function setAsHomepage(Application $app, Request $request)
     {
         if ($id = (int)$request->get('id')) {
-            return $this->_model->updateSetting($id, 'homepage');;
+            return $this->_model->updateSetting($id, 'homepage');
         } else {
             return $app->redirect($app['url_generator']->generate('/pages/admin'), 301);
         }
+
+        
         //  $id = (int)$request->get('id');
         // TODO: sprawdzic czy strona z $id istnieje
         // TODO: zapisac w bazie danych $id homepage
