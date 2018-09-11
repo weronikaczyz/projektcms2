@@ -28,7 +28,7 @@
                         <td>{{ entry.title|e }}</td>
                         <td>{{ entry.published|e }}</td>
                         <td>
-                            {#<a href="{{ url('/settings/homepage', {'id': entry.idpages}) }}">Set as homepage</a>#}
+                            <a href="{{ url('/settings/homepage', {'id': entry.idpages}) }}">Set as homepage</a>
                         </td>
                         <td>
                             <a href="{{ url('/pages/edit', {'id': entry.idpages}) }}" title="Edit entry">Edit entry</a>

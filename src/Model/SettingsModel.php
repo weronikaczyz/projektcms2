@@ -49,8 +49,8 @@ class SettingsModel
     public function updateSettings($id)
     {
         if (isset($id) && ctype_digit((string)$id)) {
-            $sql = 'UPDATE settings SET att_value = ? WHERE (att_name = "homepage") VALUES (?)';
-            $success = $this->_db->executeQuery($sql, array($this->_app->escape($id)));
+            $sql = 'UPDATE settings SET att_value = ? WHERE att_name = "homepage" VALUES ()';
+            $success = $this->_db->executeQuery ($sql, array ($this->_app->escape($id)));
             //var_dump($id);
             if ($success) {
                 return 0;
